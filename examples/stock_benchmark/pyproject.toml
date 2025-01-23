@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "stock benchmark"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+packages = [
+    { include = "stock_benchmark" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "^2.9.2"
+gradio = "^5.7.1"
+inflect = "^7.4.0"
+trafilatura = "^1.12.2"
+autoplan = { path = "../..",  develop = true }
+yfinance = "^0.2.50"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-asyncio = "^0.24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "autoplan"
+version = "0.1.0"
+description = "Autoplan is an open-source Python framework that provides a powerful pattern for implementing agentic AI applications, leveraging dynamic plan generation to select and use external tools based on the task's context."
+authors = ["Dave Nachman <dave.nachman.dev@gmail.com>", "Erdem Ozcan <alierdem.ozcan@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://Institute-for-Advanced-Enterprise-AI.github.io/autoplan"
+repository = "https://github.com/Institute-for-Advanced-Enterprise-AI/autoplan"
+documentation = "https://Institute-for-Advanced-Enterprise-AI.github.io/autoplan"
+packages = [
+    { include = "autoplan" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4.0"
+pydantic = "^2.9.0"
+litellm = "^1.48.12"
+httpx = "^0.27.2"
+httpx-sse = "^0.4.0"
+pydantic-partial = "^0.5.5"
+click = "^8.1.7"
+cookiecutter = "^2.6.0"
+tenacity = "^9.0.0"
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pyright = "^1.1.389"
+pdoc = "^15.0.0"
+pytest = "^8.3.4"
+pytest-asyncio = "^0.24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+autoplan = "autoplan.cli:cli"
+
+[tool.pyright]
+exclude = ["autoplan/generator/cookiecutter"]
