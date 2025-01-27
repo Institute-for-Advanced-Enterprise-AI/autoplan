@@ -2,7 +2,7 @@ import asyncio
 import functools
 import inspect
 from functools import wraps
-from typing import Callable, TypeVar
+from typing import Callable, Optional, TypeVar
 
 from dotenv import load_dotenv
 from pydantic import BaseModel
@@ -230,10 +230,10 @@ def with_planning(
                 tools=tools,
                 output_model=function_return_type,
                 application_args=arguments,
-                generate_plan_llm_model=generate_plan_llm_model,
-                generate_plan_llm_args=generate_plan_llm_args,
-                combine_steps_llm_model=combine_steps_llm_model,
-                combine_steps_llm_args=combine_steps_llm_args,
+                generate_plan_llm_model=generate_plan_llm_model or "gpt-4o-mini",
+                generate_plan_llm_args=generate_plan_llm_args or {},
+                combine_steps_llm_model=combine_steps_llm_model or "gpt-4o-mini",
+                combine_steps_llm_args=combine_steps_llm_args or {},
             )
 
             # start the execution in the background
