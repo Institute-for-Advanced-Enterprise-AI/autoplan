@@ -180,6 +180,10 @@ def with_planning(
     tools: list[type[Tool]],
     generate_plan_temperature: float = 0.0,
     combine_steps_temperature: float = 0.0,
+    generate_plan_llm_model: Optional[str] = None,
+    combine_steps_llm_model: Optional[str] = None,
+    generate_plan_llm_args: Optional[dict] = None,
+    combine_steps_llm_args: Optional[dict] = None,
 ):
     """
     Decorator to add planning to a function.
@@ -191,6 +195,10 @@ def with_planning(
     tools: The tools that can be used in the plan.
     generate_plan_temperature: The temperature for the generate plan prompt.
     combine_steps_temperature: The temperature for the combine steps prompt.
+    generate_plan_llm_model: The model to use for the generate plan prompt.
+    combine_steps_llm_model: The model to use for the combine steps prompt.
+    generate_plan_llm_args: The arguments to pass to the generate plan prompt.
+    combine_steps_llm_args: The arguments to pass to the combine steps prompt.
     """
 
     def wrapper(func):
@@ -222,6 +230,10 @@ def with_planning(
                 tools=tools,
                 output_model=function_return_type,
                 application_args=arguments,
+                generate_plan_llm_model=generate_plan_llm_model,
+                generate_plan_llm_args=generate_plan_llm_args,
+                combine_steps_llm_model=combine_steps_llm_model,
+                combine_steps_llm_args=combine_steps_llm_args,
             )
 
             # start the execution in the background

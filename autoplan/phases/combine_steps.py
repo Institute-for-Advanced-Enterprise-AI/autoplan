@@ -28,9 +28,9 @@ async def combine_steps(
         )
 
     response = await acompletion(
-        model=context.summary_llm_model,
+        model=context.combine_steps_llm_model,
         messages=messages,
-        **context.summary_llm_args,
+        **context.combine_steps_llm_args,
         temperature=temperature,
         response_format=context.output_model,
     )

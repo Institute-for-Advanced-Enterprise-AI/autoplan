@@ -31,10 +31,10 @@ async def generate_plan(
         )
 
     response = create_partial_streaming_completion(
-        model=context.planning_llm_model,
+        model=context.generate_plan_llm_model,
         messages=messages,
         response_format=context.plan_class,
-        **context.planning_llm_args,
+        **context.generate_plan_llm_args,
         temperature=temperature,
     )
 

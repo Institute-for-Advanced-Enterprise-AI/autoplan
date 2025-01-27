@@ -102,7 +102,7 @@ def combine_steps(
     plan_class=StoryPlan,
     tools=[create_character],
     generate_plan_prompt_generator=generate_plan,
-    combine_steps_prompt_generator=combine_steps,
+    combine_steps_prompt_generator=combine_steps
 )
 async def run(
     story_description: str,
