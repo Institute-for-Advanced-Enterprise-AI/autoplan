@@ -327,4 +327,17 @@ async def run(
     pass
 ```
 
+## Try using different LLMs
+
+You can try using different LLMs by setting the `generate_plan_llm_model` and `combine_steps_llm_model` parameters in the `with_planning` decorator, and/or by setting the model of your choice in your tool implementations. 
+
+```python
+@with_planning(
+    generate_plan_llm_model="claude-3-5-sonnet-latest",
+    combine_steps_llm_model="claude-3-5-sonnet-latest",
+)
+```
+
+If your application uses other models, you should set the API keys for those models in your environment (e.g. `ANTHROPIC_API_KEY = <your-key>`) .
+
 ----

@@ -38,7 +38,10 @@ poetry run python my_app/app.py
 This will start a Gradio interface that allows you to interact with the application without any additional effort. You can now use your browser and go to `http://localhost:7860` to see the application.
 
 > [!NOTE]
-> By default AutoPlan will use Open AI models and will include a search tool based on [you.com](http://api.you.com), which require API keys. You can set the `OPENAI_API_KEY` and `YDC_API_KEY` environment variables to your OpenAI and You API keys to use your own accounts .
+> By default AutoPlan will use Open AI models and will include a search tool based on [you.com](http://api.you.com), which require API keys. You can set the `OPENAI_API_KEY` and `YDC_API_KEY` environment variables to your OpenAI and You API keys to use your own accounts. 
+
+> [!NOTE]
+> You may want to use other LLMs in your application. You can do that by setting the `generate_plan_llm_model` and `combine_steps_llm_model` parameters in the `with_planning` decorator, and/or by setting the model of your choice in your tool implementations. If your application uses other models, don't forget to set the API keys for those models in your environment (e.g. `ANTHROPIC_API_KEY = <your-key>`) .
 
 ## Why use AutoPlan?
 
