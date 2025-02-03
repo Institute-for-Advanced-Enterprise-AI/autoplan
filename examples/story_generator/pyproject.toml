@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "story_generator"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+packages = [
+    { include = "story_generator" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "^2.9.2"
+gradio = "^5.7.1"
+inflect = "^7.4.0"
+trafilatura = "^1.12.2"
+autoplan = { path = "../.." , develop = true }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
