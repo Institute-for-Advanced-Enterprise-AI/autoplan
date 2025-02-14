@@ -163,74 +163,26 @@ async def download_many(
 def main():
     with gr.Blocks(css=css) as app:
         with gr.Tabs():
-            with gr.Tab("Web Link"):
-                with gr.Row():
-                    with gr.Column():
-                        
-                        [% for input in config.inputs %]
-                        input_box_[[input]]_1 = gr.Dropdown(
-                            label="Link for [[input]]".capitalize(),
-                            choices=[
-                                # empty string as first choice to allow the user to enter their own link
-                                "",
-                            ]
-                            + list(example_links.keys()),
-                            allow_custom_value=True,
-                        )
-
-                        # This should really just be `document1 = gr.Markdown(label="Document")`
-                        # but there is a bug in Gradio (reported by others on Github issues but unfixed)
-                        # where it causes an infinite loop if you add a `.change` handler to it,
-                        # so I added a layer of indirection via `gr.State()`
-                        document_[[input]]_1 = gr.State()
-
-                        @gr.render(inputs=document_[[input]]_1)
-                        def render_document_[[input]](item: StatefulItem | None):
-                            return gr.Markdown(
-                                label="[[input]]".capitalize(),
-                                value=item.value if item else "",
-                            )
-
-                        [% endfor %]
-                        run_button1 = gr.Button("Download & Run")
-
-                    with gr.Column():
-                        output_label1 = gr.Label(label="Output")
-                        output1 = gr.Markdown(label="Output")
-    
-
-            with gr.Tab("Edit"):
+            with gr.Tab("AutoPlan"):
                 with gr.Row():
                     with gr.Column():
                         [% for input in config.inputs %]
-                        document_[[input]]_2 = gr.Textbox(
+                        document_[[input]] = gr.Textbox(
                             label="[[input]]".capitalize(), max_lines=40, lines=20
                         )
                         [% endfor %]
-                        run_button2 = gr.Button("Run")
+                        run_button = gr.Button("Run")
 
                     with gr.Column():
-                        output_label2 = gr.Label(label="Output")
-                        output2 = gr.Markdown(label="Output")
+                        output_label = gr.Label(label="Output")
+                        output = gr.Markdown(label="Output")
 
-        run_button1.click(fn=download_many, inputs=[ [% for input in config.inputs %]
-            input_box_[[input]]_1,
-        [% endfor %] ], outputs=[ [% for input in config.inputs %]
-            document_[[input]]_1,   
-        [% endfor %] ])
-        document_[[config.inputs.keys() | first]]_1.change(
+        run_button.click(
             fn=generate,
             inputs=[ [% for input in config.inputs %]
-                document_[[input]]_1,
+                document_[[input]],
             [% endfor %] ],
-            outputs=[output_label1, output1],
-        )
-        run_button2.click(
-            fn=generate,
-            inputs=[ [% for input in config.inputs %]
-                document_[[input]]_2,
-            [% endfor %] ],
-            outputs=[output_label2, output2],
+            outputs=[output_label, output],
         )
 
     app.launch(
