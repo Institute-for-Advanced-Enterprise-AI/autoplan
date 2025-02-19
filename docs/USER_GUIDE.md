@@ -184,9 +184,12 @@ AutoPlan has a command-line interface that allows you to create a new applicatio
 ```bash
 autoplan generate \
   --name "my_app" \
-  --description "Given a situation described by the user, generate a joke about it." \ 
+  --description "This is an LLM-powered tool that can generate a research report on a topic of interest based on a user query." \ 
   --outdir .
 ```
+
+> [!NOTE]
+> You must have `AutoPlan` installed to use this command.
 
 Note that you can also leave the parameters empty and let the CLI prompt you for the information, which will help you get started with bootstrapping your application.
 
