@@ -2,7 +2,7 @@ import inspect
 import pydoc
 from collections import OrderedDict
 from functools import wraps
-from typing import Any, Callable, Literal
+from typing import Any, Callable, Literal, overload
 
 from pydantic import BaseModel, Field, create_model
 
@@ -75,10 +75,27 @@ def _function_to_tool_subclass(
     return model
 
 
+@overload
+def tool(
+    f: None = None,
+    *,
+    can_use_prior_results: bool = False,
+) -> Callable[[Callable[..., Any]], type[Tool]]: ...
+
+
+@overload
+def tool(
+    f: Callable[..., Any],
+    *,
+    can_use_prior_results: bool = False,
+) -> type[Tool]: ...
+
+
 def tool(
     f: Callable[..., Any] | None = None,
-    can_use_prior_results: bool | None = None,
-) -> type[Tool]:
+    *,
+    can_use_prior_results: bool = False,
+) -> type[Tool] | Callable[[Callable[..., Any]], type[Tool]]:
     """
     Decorator to create a tool from a function.
 
@@ -99,12 +116,10 @@ def tool(
     then "arg" could be the result of a prior tool, if specified by the plan
     """
     if f is None:
-
         @wraps(tool)
-        def decorator(f: Callable[..., Any]) -> type[Tool]:
-            return tool(f, can_use_prior_results)
-
-        return decorator  # type: ignore
+        def decorator(func: Callable[..., Any]) -> type[Tool]:
+            return tool(func, can_use_prior_results=can_use_prior_results)
+        return decorator
     else:
         if not inspect.iscoroutinefunction(f):
             raise ValueError("Tool functions must be asynchronous")
