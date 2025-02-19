@@ -152,14 +152,14 @@ async def _execute_step(context: ExecutionContext, step: Step):
         return "Error executing step"
 
 
-def _from_planned(f):
+def _from_planned(f, can_use_prior_results: bool | None = None):
     """
     Turns a "with_planning" decorated function into a tool, by:
     a) Creating a function that returns the final result
     b) Decorating it with @tool
     """
 
-    @tool
+    @tool(can_use_prior_results=can_use_prior_results)
     @wraps(f)
     async def inner(*args, **kwargs):
         async for r in f(*args, **kwargs):
@@ -184,6 +184,7 @@ def with_planning(
     combine_steps_llm_model: Optional[str] = None,
     generate_plan_llm_args: Optional[dict] = None,
     combine_steps_llm_args: Optional[dict] = None,
+    can_use_prior_results: bool | None = None,
 ):
     """
     Decorator to add planning to a function.
@@ -199,6 +200,7 @@ def with_planning(
     combine_steps_llm_model: The model to use for the combine steps prompt.
     generate_plan_llm_args: The arguments to pass to the generate plan prompt.
     combine_steps_llm_args: The arguments to pass to the combine steps prompt.
+    can_use_prior_results: Whether the tool can use the results of prior steps.
     """
 
     def wrapper(func):
