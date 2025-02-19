@@ -11,3 +11,4 @@ class ExecutionContext(BaseModel):
     generate_plan_llm_args: dict = Field(default_factory=dict)
     combine_steps_llm_model: str = "gpt-4o-mini"
     combine_steps_llm_args: dict = Field(default_factory=dict)
+    application_args: dict = Field(default_factory=dict)

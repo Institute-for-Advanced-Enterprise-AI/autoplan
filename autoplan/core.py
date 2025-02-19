@@ -152,7 +152,7 @@ async def _execute_step(context: ExecutionContext, step: Step):
         return "Error executing step"
 
 
-def _from_planned(f, can_use_prior_results: bool | None = None):
+def _from_planned(f, can_use_prior_results: bool = False):
     """
     Turns a "with_planning" decorated function into a tool, by:
     a) Creating a function that returns the final result
