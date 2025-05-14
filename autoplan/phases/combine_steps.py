@@ -32,7 +32,13 @@ async def combine_steps(
         messages=messages,
         **context.combine_steps_llm_args,
         temperature=temperature,
-        response_format=context.output_model,
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "schema": context.output_model.model_json_schema(),
+                "name": context.output_model.__name__,
+            },
+        },
     )
 
     # asserts are for type checking, and reflect invariants we expect from the acompletion function
