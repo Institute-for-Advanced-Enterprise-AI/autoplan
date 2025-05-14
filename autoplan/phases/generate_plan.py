@@ -6,6 +6,7 @@ from autoplan.llm_utils.create_partial_streaming_completion import (
 )
 from autoplan.models import Plan
 from autoplan.trace import trace
+from litellm import acompletion
 
 
 @trace
@@ -29,21 +30,20 @@ async def generate_plan(
                 "content": prompt,
             }
         )
-
-    response = create_partial_streaming_completion(
+    response = await acompletion(
         model=context.generate_plan_llm_model,
         messages=messages,
-        response_format=context.plan_class,
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "schema": context.plan_class.model_json_schema(),
+                "name": context.plan_class.__name__,
+            },
+        },
         **context.generate_plan_llm_args,
         temperature=temperature,
     )
 
-    item = None
-
-    async for item in response:
-        queue.put_nowait(item)
-
-    # signal the end of the plan generation
+    queue.put_nowait(context.plan_class.model_validate_json(response.choices[0].message.content))
     queue.put_nowait(None)
-
-    return item
+    return context.plan_class.model_validate_json(response.choices[0].message.content)
