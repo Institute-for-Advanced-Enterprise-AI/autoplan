@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "autoplan"
-version = "0.1.2"
+version = "0.1.3"
 description = "AutoPlan is an open-source Python framework that provides a powerful pattern for implementing agentic AI applications, leveraging dynamic plan generation to select and use external tools based on the task's context."
 authors = ["Dave Nachman <dave.nachman.dev@gmail.com>", "Erdem Ozcan <alierdem.ozcan@gmail.com>"]
 readme = "README.md"
